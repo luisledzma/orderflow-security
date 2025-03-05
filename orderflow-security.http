@@ -1,0 +1,6 @@
+@orderflow_security_HostAddress = http://localhost:5032
+
+GET {{orderflow_security_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
