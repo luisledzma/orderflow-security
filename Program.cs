@@ -6,6 +6,7 @@ using orderflow.security.Repository;
 using orderflow.security.Service;
 using Serilog;
 using System.Text;
+using orderflow.security.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 // Add services
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
@@ -83,6 +85,8 @@ builder.Services.AddAuthorization(); // Enables authorization
 builder.WebHost.UseUrls("http://0.0.0.0:5052"); // Security Service runs on port 5052
 
 var app = builder.Build();
+
+app.UseMiddleware<LoggingMiddleware>();
 
 // Ensure logging is captured during shutdown
 app.Lifetime.ApplicationStopping.Register(Log.CloseAndFlush);
