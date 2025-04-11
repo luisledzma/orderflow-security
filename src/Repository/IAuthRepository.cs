@@ -1,3 +1,5 @@
+using orderflow.security.Models;
+
 namespace orderflow.security.Repository;
 /// <summary>
 /// Defines all the methods that <see cref="AuthRepository"/> must implement.

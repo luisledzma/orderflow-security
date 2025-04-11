@@ -1,3 +1,5 @@
+using orderflow.security.Models;
+
 namespace orderflow.security.Service;
 /// <summary>
 /// Defines all the methods that <see cref="AuthService"/> must implement.

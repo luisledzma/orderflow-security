@@ -2,21 +2,31 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using orderflow.security.Models;
 
 namespace orderflow.security.Repository;
 
 /// <summary>
-/// Implement all the methods that <see cref="IAuthRepository"/> define.
+/// Implements authentication-related logic such as validating users and generating JWT tokens.
 /// </summary>
 public class AuthRepository : IAuthRepository
 {
     private readonly IConfiguration _config;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AuthRepository"/> class.
+    /// </summary>
+    /// <param name="config">The configuration instance used to access JWT settings.</param>
     public AuthRepository(IConfiguration config)
     {
         _config = config;
     }
 
+    /// <summary>
+    /// Authenticates the user with the given login request.
+    /// </summary>
+    /// <param name="request">The login request containing username and password.</param>
+    /// <returns>A JWT token if authentication is successful; otherwise, null.</returns>
     public string? AuthenticateUser(LoginRequest request)
     {
         // Simulate user validation (In a real case, check DB)
@@ -28,6 +38,12 @@ public class AuthRepository : IAuthRepository
         return null; // Authentication failed
     }
 
+    /// <summary>
+    /// Generates a JWT token for the specified username.
+    /// </summary>
+    /// <param name="username">The username for which to generate the token.</param>
+    /// <returns>A JWT token string.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if any required JWT settings are missing.</exception>
     private string GenerateJwtToken(string username)
     {
         var jwtSettings = _config.GetSection("JwtSettings");
